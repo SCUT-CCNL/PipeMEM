@@ -77,6 +77,7 @@ def merge(q_file1,q_file2,q_merge):
 	q_merge.put('end')
 
 import ConfigParser
+import getpass
 
 if __name__ == '__main__':
 
@@ -92,7 +93,7 @@ if __name__ == '__main__':
 	#address = 'hdfs://ip-172-31-1-158.ap-northeast-1.compute.internal'
         port = int(config.get('PRE','HDFS_PORT'))
         #port = 8020
-        user = 'ec2-user'
+        user = getpass.getuser()
         #user = 'ec2-user'
         mgfile = config.get('PRE','MERGE_NAME')
         #mgfile = "./merge.fastq"
