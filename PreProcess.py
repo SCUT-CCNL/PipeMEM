@@ -78,6 +78,7 @@ def merge(q_file1,q_file2,q_merge):
 
 import ConfigParser
 import getpass
+import sys
 
 if __name__ == '__main__':
 
@@ -98,12 +99,12 @@ if __name__ == '__main__':
         mgfile = config.get('PRE','MERGE_NAME')
         #mgfile = "./merge.fastq"
 
-	p1 = Process(target=readFile,args=('/tmp/genomic/ERR000589_1.filt.fastq',q_file1,))	
+	p1 = Process(target=readFile,args=(sys.argv[1],q_file1,))	
 #	p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
 	p1.start()
 	print 'read1 start'
 
-	p2 = Process(target=readFile,args=('/tmp/genomic/ERR000589_2.filt.fastq',q_file2,))
+	p2 = Process(target=readFile,args=(sys.argv[2],q_file2,))
 #	p2 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_2.fastq',q_file2,))
 	p2.start()
 	print 'read2 start'
