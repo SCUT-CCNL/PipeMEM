@@ -22,7 +22,7 @@ def writeHdfs(q,haddress,hport,user,mgfile):
 		print '1'
 	f.close()
 
-def readFile(filename,q_file):
+def readFile(filename,q_file,splitter):
 	f = open(filename,'r')
 	seq = ''
 	seqList = ''
@@ -37,7 +37,7 @@ def readFile(filename,q_file):
 		if id%4 == 1:
 			seq = line
 		else:
-			seq = seq + '|'+ line
+			seq = seq + splitter+ line
 		
 		if id%4 ==0:
 			seqList += seq	+'\n'	
@@ -57,7 +57,7 @@ def readFile(filename,q_file):
 	f.close()
 
 
-def merge(q_file1,q_file2,q_merge):
+def merge(q_file1,q_file2,q_merge,splitter):
 	while 1:
 		seq1 = q_file1.get()
 		seq2 = q_file2.get()
@@ -69,7 +69,7 @@ def merge(q_file1,q_file2,q_merge):
 		content = ''
 		i =0
 		while i<(len(list1)-1):
-			content += list1[i]+'|'+list2[i]+'\n'
+			content += list1[i]+splitter+list2[i]+'\n'
 			i = i+1
 		#print 'merge ok'
 		q_merge.put(content)
@@ -98,18 +98,21 @@ if __name__ == '__main__':
         #user = 'ec2-user'
         mgfile = config.get('PRE','MERGE_NAME')
         #mgfile = "./merge.fastq"
+        splitter = config.get('PRE','SPLITTER')
+        #splitter = ' '
+
         if sys.argv[1]=="-p":
-	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,))	
+	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,splitter))	
 #	    p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
 	    p1.start()
 	    print 'read1 start'
 
-    	    p2 = Process(target=readFile,args=(sys.argv[3],q_file2,))
+    	    p2 = Process(target=readFile,args=(sys.argv[3],q_file2,splitter))
 #           p2 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_2.fastq',q_file2,))
 	    p2.start()
 	    print 'read2 start'
 
-	    p3 = Process(target=merge,args=(q_file1,q_file2,q_merge,))
+	    p3 = Process(target=merge,args=(q_file1,q_file2,q_merge,splitter))
 	    p3.start()
 	    print 'merge start'
 
@@ -118,7 +121,7 @@ if __name__ == '__main__':
 	    print 'write start'
 
         if sys.argv[1]=="-s":
-	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,))	
+	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,splitter))	
 #	    p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
 	    p1.start()
 	    print 'read1 start'
