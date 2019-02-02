@@ -7,11 +7,11 @@ from hdfs3 import HDFileSystem
 
 
 
-def writeHdfs(q):
-	hdfs = HDFileSystem(host='hdfs://ip-172-31-1-158.ap-northeast-1.compute.internal',port=8020,user='ec2-user')
-	f = hdfs.open('./merge.fastq','wb',block_size=134217728)
+def writeHdfs(q,haddress,hport,user,mgfile):
+	hdfs = HDFileSystem(host=haddress,port=hport,user=user)
+	f = hdfs.open(mgfile,'wb',block_size=134217728)
 	f.close()
-	f = hdfs.open('./merge.fastq','ab',buff=112197632)
+	f = hdfs.open(mgfile,'ab',buff=112197632)
 	while 1:
 		seqList = q.get()
 		print len(seqList)
@@ -76,13 +76,27 @@ def merge(q_file1,q_file2,q_merge):
 		print 'merge block put'
 	q_merge.put('end')
 
+import ConfigParser
+
 if __name__ == '__main__':
 
 	t_start = time.time()
 	q_file1 = Queue(5)
 	q_file2 = Queue(5)
 	q_merge = Queue(10)
-	
+
+
+        config = ConfigParser.ConfigParser()
+        config.read('pipemem.env')
+	address = config.get('PRE','HDFS_HOST')
+	#address = 'hdfs://ip-172-31-1-158.ap-northeast-1.compute.internal'
+        port = int(config.get('PRE','HDFS_PORT'))
+        #port = 8020
+        user = 'ec2-user'
+        #user = 'ec2-user'
+        mgfile = config.get('PRE','MERGE_NAME')
+        #mgfile = "./merge.fastq"
+
 	p1 = Process(target=readFile,args=('/tmp/genomic/ERR000589_1.filt.fastq',q_file1,))	
 #	p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
 	p1.start()
@@ -97,7 +111,7 @@ if __name__ == '__main__':
 	p3.start()
 	print 'merge start'
 
-	p4 = Process(target=writeHdfs,args=(q_merge,))
+	p4 = Process(target=writeHdfs,args=(q_merge,address,port,user,mgfile))
 	p4.start()
 	print 'write start'
 
