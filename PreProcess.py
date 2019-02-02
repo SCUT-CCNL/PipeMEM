@@ -98,22 +98,32 @@ if __name__ == '__main__':
         #user = 'ec2-user'
         mgfile = config.get('PRE','MERGE_NAME')
         #mgfile = "./merge.fastq"
+        if sys.argv[1]=="-p":
+	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,))	
+#	    p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
+	    p1.start()
+	    print 'read1 start'
 
-	p1 = Process(target=readFile,args=(sys.argv[1],q_file1,))	
-#	p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
-	p1.start()
-	print 'read1 start'
+    	    p2 = Process(target=readFile,args=(sys.argv[3],q_file2,))
+#           p2 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_2.fastq',q_file2,))
+	    p2.start()
+	    print 'read2 start'
 
-	p2 = Process(target=readFile,args=(sys.argv[2],q_file2,))
-#	p2 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_2.fastq',q_file2,))
-	p2.start()
-	print 'read2 start'
+	    p3 = Process(target=merge,args=(q_file1,q_file2,q_merge,))
+	    p3.start()
+	    print 'merge start'
 
-	p3 = Process(target=merge,args=(q_file1,q_file2,q_merge,))
-	p3.start()
-	print 'merge start'
+	    p4 = Process(target=writeHdfs,args=(q_merge,address,port,user,mgfile))
+	    p4.start()
+	    print 'write start'
 
-	p4 = Process(target=writeHdfs,args=(q_merge,address,port,user,mgfile))
-	p4.start()
-	print 'write start'
+        if sys.argv[1]=="-s":
+	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,))	
+#	    p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
+	    p1.start()
+	    print 'read1 start'
+
+	    p4 = Process(target=writeHdfs,args=(q_file1,address,port,user,mgfile))
+	    p4.start()
+	    print 'write start'
 
