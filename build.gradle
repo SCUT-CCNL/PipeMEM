@@ -1,0 +1,65 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter() // for shadow plugin
+    }
+}
+
+
+
+
+plugins {
+    id "java"
+    id 'maven'
+    id "com.github.johnrengelman.shadow" version "1.2.3"
+
+}
+group 'ccnl '
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    
+//    maven {
+  //      url "https://artifactory.broadinstitute.org/artifactory/libs-snapshot/" //for htsjdk snapshots
+   // }
+}
+//shadowJar {
+ //   manifest {
+   //     attributes 'Implementation-Title': 'Test',
+     //           'Implementation-Version': project.version,
+       //         'Main-Class': 'SAMFile2Parquet'
+   // }
+
+  //  dependencies {
+    //    include(dependency('com.github.samtools:htsjdk:2.11.0'))
+       // include(dependency('com.google.guava:guava:18.0'))
+   // }
+//}
+
+
+//}
+
+    
+
+
+    dependencies {
+        compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.2.0'
+        // https://mvnrepository.com/artifact/org.apache.spark/spark-sql_2.11
+        compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.2.0'
+        // https://mvnrepository.com/artifact/com.github.samtools/htsjdk
+//        compile 'com.github.samtools:htsjdk:2.11.0'
+//        compile group: 'com.github.samtools', name: 'htsjdk', version: '2.13.2'
+     //   compile 'com.google.guava:guava:18.0'
+
+
+
+
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
+
