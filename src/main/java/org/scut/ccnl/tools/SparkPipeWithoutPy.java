@@ -26,8 +26,9 @@ import org.apache.hadoop.conf.Configuration;
 
 
 public class SparkPipeWithoutPy {
-   	public static Iterator<String> splitPE(String record){
-        	List<String> seq = Arrays.asList(record.split("\\|"));
+   	public static Iterator<String> splitPE(String record, String Splitter){
+        	List<String> seq = Arrays.asList(record.split(Splitter));
+        	//List<String> seq = Arrays.asList(record.split("\\|"));
        		return seq.iterator();
     	}
 
@@ -47,6 +48,8 @@ public class SparkPipeWithoutPy {
         String extern_program = args[0];
         String inputFile = args[1];
         String outputPath = args[2];
+        //String Splitter = args[3];
+        String Splitter = "å";
        // String format = args[3];
        // String dictionaryPath = args[4];
         //iString rg = args[5];
@@ -64,7 +67,7 @@ public class SparkPipeWithoutPy {
         JavaRDD<String> mergedRDD = spark.read().textFile(inputFile).javaRDD();
         System.out.println("Partitions num:" + mergedRDD.getNumPartitions());
 
-        JavaRDD<String> splitRDD = mergedRDD.flatMap(pair -> splitPE(pair));
+        JavaRDD<String> splitRDD = mergedRDD.flatMap(pair -> splitPE(pair,Splitter));
 
         JavaRDD<String> alignedRecord = splitRDD.pipe(extern_program);
 
