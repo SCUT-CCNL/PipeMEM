@@ -48,8 +48,8 @@ public class SparkPipeWithoutPy {
         String extern_program = args[0];
         String inputFile = args[1];
         String outputPath = args[2];
-        //String Splitter = args[3];
-        String Splitter = "å";
+        String Splitter = Character.toString((char)Integer.parseInt(args[3]));
+        //String Splitter = "å";
        // String format = args[3];
        // String dictionaryPath = args[4];
         //iString rg = args[5];
