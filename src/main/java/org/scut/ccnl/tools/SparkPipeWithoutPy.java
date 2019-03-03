@@ -48,19 +48,9 @@ public class SparkPipeWithoutPy {
         String extern_program = args[0];
         String inputFile = args[1];
         String outputPath = args[2];
-        String Splitter = Character.toString((char)Integer.parseInt(args[3]));
-        //String Splitter = "å";
-       // String format = args[3];
-       // String dictionaryPath = args[4];
-        //iString rg = args[5];
-        
-
-//        String extern_program = "/home/jryoung/documents/cuda_mem_testdata/extern_pro.sh";
-//        String inputFile = "/home/jryoung/documents/cuda_mem_testdata/chr3_2_merge.fastq";
-//        String outputPath = "/home/jryoung/documents/cuda_mem_testdata/test2_parquet/";
-//        String format = "parquet";
-//        String dictionaryPath = "/home/jryoung/documents/cuda_mem_testdata/chr3.dict";
-//        String rg = "4|lib1|illumina|20|22";
+        //unprintable character we setted
+	String Splitter = Character.toString((char)65533);
+	System.out.println("Splitter is "+Splitter);
         SparkConf conf = new SparkConf().setAppName("SparkPipeWithoutPy");
         SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
         

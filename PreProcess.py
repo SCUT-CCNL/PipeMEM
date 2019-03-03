@@ -97,10 +97,8 @@ if __name__ == '__main__':
         user = getpass.getuser()
         #user = 'ec2-user'
         mgfile = config.get('PRE','MERGE_NAME')
-        #mgfile = "./merge.fastq"
-        splitter = config.get('PRE','SPLITTER')
-        #splitter = ' '
-
+        #the unprintable character from python perspective
+        splitter=chr(229)
         if sys.argv[1]=="-p":
 	    p1 = Process(target=readFile,args=(sys.argv[2],q_file1,splitter))	
 #	    p1 = Process(target=readFile,args=('/data/home/liucheng/data/NA12878_500w_1.fastq',q_file1,))	
