@@ -1,4 +1,4 @@
-# pipeMEM
+# PipeMEM
 A tool that run BWA-MEM in Spark
 
 # Pre-Request
