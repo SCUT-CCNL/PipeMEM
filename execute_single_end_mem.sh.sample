@@ -1,1 +1,2 @@
-~/efs/bwa/bwa mem  -t 4 ~/efs/ref/hg19_ref.fa -
+/efs/bwa/bwa mem  -t 4 /efs/ref/hg19_ref.fa -
+#specify a bwa software location and index file loation that every node can access

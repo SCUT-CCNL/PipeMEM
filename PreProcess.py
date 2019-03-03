@@ -90,13 +90,13 @@ if __name__ == '__main__':
 
         config = ConfigParser.ConfigParser()
         config.read('pipemem.env')
-	address = config.get('PRE','HDFS_HOST')
+	address = config.get('PIPE','HDFS_HOST')
 	#address = 'hdfs://ip-172-31-1-158.ap-northeast-1.compute.internal'
-        port = int(config.get('PRE','HDFS_PORT'))
+        port = int(config.get('PIPE','HDFS_PORT'))
         #port = 8020
         user = getpass.getuser()
         #user = 'ec2-user'
-        mgfile = config.get('PRE','MERGE_NAME')
+        mgfile = config.get('PIPE','MERGE_NAME')
         #the unprintable character from python perspective
         splitter=chr(229)
         if sys.argv[1]=="-p":
