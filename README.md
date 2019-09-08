@@ -32,19 +32,19 @@ bwa
 # Download, Compile and comfigure
 git clone https://github.com/neozhang307/pipeMEM.git
 
-Please install Anaconda and load requirements.txt in the root directory.
+1. Install Anaconda and load requirements.txt in the root directory.
 
 Run
 ```bash graddlew build ```
 to build file 
 
-Please install ```bwa``` and save it in a directory that can be access by all nodes.
+2. Install ```bwa``` and save it in a directory that can be access by all nodes.
 
-Please use ```bwa``` to generate indexes and save them in a directory that can be access by all nodes.
+3. Use ```bwa``` to generate indexes and save them in a directory that can be access by all nodes.
 
-Please mv ```execute_pair_end_mem.sh.sample```(for paired end) or ```execute_single_end_mem.sh.sample ```(for single end) to the the directory that can be access by all nodes. And change the ```bwa``` program location and indexes file location inside.
+4. Move ```execute_pair_end_mem.sh.sample```(for paired end) or ```execute_single_end_mem.sh.sample ```(for single end) to the the directory that can be access by all nodes. And change the ```bwa``` program location and indexes file location inside.
 
-Please change the ```pipemem.env``` file according to the system environment. 
+5. Change the ```pipemem.env``` file according to the system environment. 
 
 # Preprocess
 
@@ -89,7 +89,7 @@ Make sure that the EFS is in the same security group as cluster nodes.
 You can mount EFS to every node and access it, following the instructions of Amazon. 
 
 ## Create user file in HDFS
-There is no user file by default. So please create it with the following command:
+There is no user directory by default. So please create it with the following command:
 ```
 sudo -u hdfs hadoop fs -mkdir /user/ec2-user
 sudo -u hdfs hadoop fs -chown ec2-user /user/ec2-user
